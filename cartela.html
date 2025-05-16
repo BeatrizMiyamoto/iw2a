@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bingo</title>
     <link href="bingo.css" rel="stylesheet" />
 </head>
+
 <body>
     <table class="tabela">
         <thead>
@@ -19,11 +21,11 @@
         </thead>
         <tbody>
             <tr>
-                <td id="b1" onclick="MarcarCartela(this)" >12</td>
-                <td id="i1" onclick="MarcarCartela(this)" >30</td>
-                <td id="n1" onclick="MarcarCartela(this)" >33</td>
-                <td id="g1" onclick="MarcarCartela(this)" >51</td>
-                <td id="o1" onclick="MarcarCartela(this)" >69</td>
+                <td id="b1" onclick="MarcarCartela(this)">12</td>
+                <td id="i1" onclick="MarcarCartela(this)">30</td>
+                <td id="n1" onclick="MarcarCartela(this)">33</td>
+                <td id="g1" onclick="MarcarCartela(this)">51</td>
+                <td id="o1" onclick="MarcarCartela(this)">69</td>
             </tr>
             <tr>
                 <td id="b2" onclick="MarcarCartela(this)">9</td>
@@ -56,98 +58,116 @@
         </tbody>
     </table>
 
-</br>
+    </br>
 
-<button id="botao" onclick="Piscar()">
-    Piscando o Botão
-</button>
+    <button id="botao" onclick="Piscar()">
+        Piscando o Botão
+    </button>
 
-<button onclick="GerarCartela()">
-    Gerar Cartela
-</button>
-
-
-
-<script>
-    function GerarCartela()
-    {
-        vetorB = GerarVetor(1,15)
-        console.log(vetorB)
-
-        vetorI = GerarVetor(16,30)
-        console.log(vetorI)
-
-        vetorN = GerarVetor(31,45)
-        console.log(vetorN)
-
-        vetorG = GerarVetor(46,60)
-        console.log(vetorG)
-
-        vetorO = GerarVetor(61,75)
-        console.log(vetorO)
-
-        for (var i=0; i < 5; i++)
-        {
-            var td = document.getElementById("b"+(i+1) )
-            td.innerText = vetorB[i]
-
-            td = document.getElementById("i"+(i+1) )
-            td.innerText = vetorI[i]
-
-            td = document.getElementById("n"+(i+1) )
-            td.innerText = vetorN[i]
-
-            td = document.getElementById("g"+(i+1) )
-            td.innerText = vetorG[i]
-
-            td = document.getElementById("o"+(i+1) )
-            td.innerText = vetorO[i]
+    <button onclick="GerarCartela()">
+        Gerar Cartela
+    </button>
 
 
+
+    <script>
+        function GerarCartela() {
+            vetorB = MisturarArray(GerarVetor(1, 15))
+            console.log(vetorB)
+
+            vetorI = MisturarArray(GerarVetor(16, 30))
+            console.log(vetorI)
+
+            vetorN = MisturarArray(GerarVetor(31, 45))
+            console.log(vetorN)
+
+            vetorG = MisturarArray(GerarVetor(46, 60))
+            console.log(vetorG)
+
+            vetorO = MisturarArray(GerarVetor(61, 75))
+            console.log(vetorO)
+
+            for (var i = 0; i < 5; i++) {
+                var td = document.getElementById("b" + (i + 1))
+                td.innerText = vetorB[i]
+
+                td = document.getElementById("i" + (i + 1))
+                td.innerText = vetorI[i]
+
+                td = document.getElementById("n" + (i + 1))
+                td.innerText = vetorN[i]
+
+                td = document.getElementById("g" + (i + 1))
+                td.innerText = vetorG[i]
+
+                td = document.getElementById("o" + (i + 1))
+                td.innerText = vetorO[i]
+
+
+
+
+            }
+        }
+        function GerarVetor(numeroInicial, numeroFinal) {
+            vetor = []
+            for (var i = numeroInicial; i <= numeroFinal; i++) {
+                vetor.push(i)
+            }
+            return vetor
+        }
+        function Piscar() {
+            var botao = document.getElementById("botao");
+            if (botao.style.backgroundColor == 'red') {
+                botao.style.backgroundColor = 'blue'
+
+            } else {
+                botao.style.backgroundColor = 'red'
+            }
 
 
         }
-    }
-    function GerarVetor(numeroInicial, numeroFinal)
-    {
-        vetor = []
-        for(var i = numeroInicial; i <=numeroFinal; i++)
-        {
-            vetor.push(i)
+
+        function MarcarCartela(td) {
+            if (td.style.backgroundColor != 'black') {
+                td.style.backgroundColor = 'black';
+                td.style.color = "white";
+            } else {
+                td.style.backgroundColor = '';
+                td.style.color = "black";
+            }
+
         }
-        return vetor
-    }
-    function Piscar()
-    {
-        var botao = document.getElementById("botao");
-        if (botao.style.backgroundColor == 'red')
-    {
-        botao.style.backgroundColor = 'blue'
 
-    }else{
-        botao.style.backgroundColor = 'red'
-    }
-    
 
-    }
+        function NumeroAleatorio(numeroMinimo, numeroMaximo) {
+            var retorno = Math.floor(Math.random() * numeroMaximo)
+            if (retorno > 0 && retorno >= numeroMinimo && retorno <= numeroMaximo) {
+                return retorno
+            } else {
+                return NumeroAleatorio(numeroMinimo, numeroMaximo)
+            }
+        }
 
-    function MarcarCartela(td)
-    {
-        if(td.style.backgroundColor != 'black')
-    {
-        td.style.backgroundColor = 'black';
-        td.style.color = "white";
-    }else{
-        td.style.backgroundColor = '';
-        td.style.color = "black";
-    }
-        
-    }
-    
+        function MisturarArray(array) {
+            var aleatorio
+            var cont = array.length
+            var auxiliar
+            while (cont != 0) {
+                aleatorio = NumeroAleatorio(1, array.length)
+                cont--
+                auxiliar = array[cont]
+                array[cont] = array[aleatorio]
+                array[aleatorio] = auxiliar
+            }
+            return array
+        }
 
-</script>
+
+
+    </script>
 
 </body>
-    
+
 </body>
+
 </html>
