@@ -1,0 +1,42 @@
+
+body {
+   background-color: #ecd0ff;
+   font-family: 'Berlin Sans FB', sans-serif;
+}
+
+.card {
+   margin-top: 20px;
+}
+
+#searchButton {
+   padding: 10px 20px;
+}
+
+.btn-warning {
+   background-color: #54fff6;
+   border-color: #ffc107;
+   color: rgb(19, 13, 13);
+}
+
+.btn-danger {
+   background-color: #ee6fe8;
+   border-color: #5b1172;
+   color: rgb(3, 2, 2);
+}
+
+.table td, .table th {
+   vertical-align: middle;
+}
+
+.table thead {
+   background-color: #aa42ff;
+   color: rgb(63, 14, 65);
+}
+
+.table tbody tr:hover {
+   background-color: #d893f8;
+}
+
+#search {
+   width: 100%;
+}
