@@ -21,7 +21,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
     case 'GET':
-        if (isse($_GET['PESQUISA'])){
+        if (isset($_GET['PESQUISA'])){
             $pesquisa= "%" . $_GET['pesquisa'] . "%";
 
             $stmt = $conn->prepare("SELECT * FROM projetos WHERE LOGIN LIKE ? OR NOME LIKE?");
@@ -30,8 +30,72 @@ switch ($method) {
 
             $stmt->execute();
 
-            $result = $stmt->get_result();
+            $result = $stmt->get_result()
 
-
-        }
+} else {
+    $result = $conn->query("SELECT * FROM projetos order by ID desc");
 }
+
+$retorno = [];
+
+while ($linha = $result->fetch_assoc()){
+    $retorno[] = $linha;
+}
+
+echo json_encode($retorno);
+break;
+
+case 'POST':
+
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    $stmt = $conn->prepare("INSERT INTO projetos (LOGIN, NOME, EMAIL, SENHA, ATIVO) VALUES (?, ?, ?, ?, ?)");
+
+    $stmt->bind_param("ssssi", $data['LOGIN'], $data['NOME'], $data['email'], $data['SENHA'], $data['ATIVO']);
+
+    $stmt->execute();
+
+echo json_encode(["status => "ok", "insert_id" => $stmt->insert_id]);
+break;
+
+
+case 'PUT':
+
+    $data = json_decode(file_get_contents("php:/input"), true;
+
+    $stmt = $conn-> prepare("UPDATE projetos SET LOGIN=?, NOME=?, EMAIL=?, SENHA=?, ATIVO=? WHERE ID=?);
+
+    $stmt->bind_param("ssssii", $data['LOGIN'], $data['NOME'], $data['EMAIL'], $data['SENHA'], $data['ATIVO'], $data['ID']);
+
+    $stmt->execute();
+
+    echo json_encode(["status => "ok"]);
+    break;
+
+case'DELETE';
+
+    $id = $_GET['id'];
+
+    $stmt = $conn->prepare("DELETE FROM projetos WHERE ID=?");
+
+    $stmt->bind_param("i", $id);
+
+    $stmt->execute();
+
+    echo json_encode(["status" => "ok"]);
+    break;
+
+}
+
+$conn->close();
+        
+
+    
+
+    
+
+    
+
+
+
+    
